@@ -21,6 +21,7 @@
       "@common": ["./common"],
       "@config": ["./configs"],
       "@module": ["./modules"],
+      "@domain": ["./domain"]
     },
   }
 }

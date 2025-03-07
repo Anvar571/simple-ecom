@@ -15,11 +15,12 @@ export class ConfigService implements IConfig {
 
   get database() {
     return {
-      host: this.configService.get<string>('DATABASE_HOST', 'localhost'),
-      port: this.configService.get<number>('DATABASE_PORT', 5432),
-      username: this.configService.get<string>('DATABASE_USER', 'postgres'),
-      password: this.configService.get<string>('DATABASE_PASSWORD', 'secret'),
-      database: this.configService.get<string>('DATABASE_NAME', 'mydb'),
+      type: this.configService.get<string>("POSTGRES_TYPE", "postgres"),
+      host: this.configService.get<string>('POSTGRES_HOST', 'localhost'),
+      port: this.configService.get<number>('POSTGRES_PORT', 5432),
+      username: this.configService.get<string>('POSTGRES_USER', 'postgres'),
+      password: this.configService.get<string>('POSTGRES_PASSWORD', 'secret'),
+      database: this.configService.get<string>('POSTGRES_NAME', 'mydb'),
     };
   }
 
