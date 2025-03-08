@@ -1,51 +1,73 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { User } from "./user";
-import { UserResponse, UserUpdateDto, UserFindParam } from "./user.types";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, ILike } from 'typeorm';
+import { UserEntity } from './entity/user.entity';
+import { UserResponse, UserFindParam, FindAllUsersType } from './user.types';
+import { UserFilterDto } from './dto/find-users.dto';
 
 export interface IUserRepository {
-    create: (user: User) => Promise<UserResponse>;
-    update: (user: UserUpdateDto) => Promise<UserResponse>;
-    findByParam: (param: Partial<UserFindParam>) => Promise<User | null>;
+  create: (user: UserEntity) => Promise<UserResponse>;
+  findByParam: (param: Partial<UserFindParam>) => Promise<UserEntity | null>;
+  findAllUsers: (param: Partial<FindAllUsersType>) => Promise<UserEntity[] | []>;
 }
 
 @Injectable()
 export class UserRepository implements IUserRepository {
-    constructor(
-        @InjectRepository(User)
-        private readonly repository: Repository<User>,
-    ) {}
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepo: Repository<UserEntity>,
+  ) {}
 
-    async create(user: User): Promise<UserResponse> {
-        const newUser = this.repository.create(user);
-        const savedUser = await this.repository.save(newUser);
-        return this.mapToResponse(savedUser);
-    }
-    
-    async update(user: UserUpdateDto): Promise<UserResponse> {
-        await this.repository.update(user.id, user);
-        const updatedUser = await this.repository.findOne({ where: { id: user.id } });
+  async create(user: UserEntity): Promise<UserResponse> {
+    const newUser = this.userRepo.create(user);
+    const savedUser = await this.userRepo.save(newUser);
+    return this.mapToResponse(savedUser);
+  }
 
-        if (!updatedUser) {
-            throw new NotFoundException("User not found");
-        }
-
-        return this.mapToResponse(updatedUser);
+  async findByParam(param: Partial<UserFindParam>): Promise<UserEntity | null> {
+    if (param.email) {
+        const userByEmail = await this.userRepo.findOne({ where: { email: param.email } });
+        if (userByEmail) return userByEmail;
     }
 
-    async findByParam(param: Partial<UserFindParam>): Promise<User | null> {
-        return this.repository.findOne({ where: param });
+    if (param.phone) {
+        const userByPhone = await this.userRepo.findOne({ where: { phone: param.phone } });
+        if (userByPhone) return userByPhone;
     }
 
-    private mapToResponse(user: User): UserResponse {
-        return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
-        };
+    return null;
+}
+
+  async findByEmail(email: string) {
+    return this.userRepo.findOne({ where: {email} });
+  }
+
+  async findAllUsers(filterDto: UserFilterDto) {
+    const where: any = {};
+
+    if (filterDto.fullname) {
+      where.fullname = ILike(`%${filterDto.fullname}%`);
     }
+
+    if (filterDto.email) {
+      where.email = ILike(`%${filterDto.email}%`);
+    }
+
+    if (filterDto.phone) {
+      where.phone = filterDto.phone;
+    }
+
+    return this.userRepo.find({ where });
+  }
+
+  private mapToResponse(user: UserEntity): UserResponse {
+    return {
+      id: user.id,
+      fullname: user.fullname,
+      email: user.email,
+      phone: user.phone,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
 }

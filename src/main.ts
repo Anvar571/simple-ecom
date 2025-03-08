@@ -3,12 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
-import { ConfigService } from './common/configs/config.service';
+import { AppConfigService } from './common/configs/config.service';
 
 async function bootstrap() {
   const app: INestApplication = await NestFactory.create(AppModule);
 
-  const config = app.get(ConfigService);
+  const config = app.get(AppConfigService);
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Simple E-commerse API')

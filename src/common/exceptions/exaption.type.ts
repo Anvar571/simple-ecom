@@ -1,5 +1,6 @@
 export interface ExceptionResponseBody {
   statusCode: number;
-  message: string;
-  error: string;
+  message: string | object;
+  error: any;
+  description?: string
 }

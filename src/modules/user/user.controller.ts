@@ -1,19 +1,27 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
-import { CreateUserUseCase } from './usecases/createUserUseCase';
+import { Controller, Delete, Get, Patch, Query } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+import { FindAllUserUseCase } from './usecases/findAllUsersUseCase';
+import { UserFilterDto } from './dto/find-users.dto';
+import { UserEntity } from './entity/user.entity';
+
+@ApiTags("Users")
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly createUseCase: CreateUserUseCase
-  ) {}
+  constructor(private readonly findAllUserUseCase: FindAllUserUseCase) {}
 
   @Get()
-  findAllUser() {
-    return 'All users';
+  @ApiOkResponse({ description: "Find users", type: [UserEntity] })
+  findAllUser(@Query() param: UserFilterDto) {
+    return this.findAllUserUseCase.execute(param)
   }
 
-  @Post("create")
-  createUser(@Body() body: any) {
-    this.createUseCase.execute(body);
-  }
+  @Get(":id")
+  findOne() {}
+
+  @Patch(":id")
+  updateUser() {}
+
+  @Delete(":id")
+  deleteUser() {}
 }

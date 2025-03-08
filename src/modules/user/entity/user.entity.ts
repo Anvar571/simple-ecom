@@ -1,25 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+} from 'typeorm';
+import { UserModel } from '../user.types';
+import { DefaultEntity } from '../../base/default.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+@Entity("users")
+export class UserEntity extends DefaultEntity implements UserModel {
+  @ApiProperty()
   @Column({ length: 100 })
-  name: string;
+  fullname: string;
 
+  @ApiProperty()
   @Column({ unique: true })
   email: string;
 
+  @ApiProperty()
   @Column({ unique: true })
   phone: string;
 
   @Column()
   password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+  constructor(user: UserModel) {
+    super();
+    Object.assign(this, user);
+  }
 }

@@ -3,7 +3,7 @@ import { ConfigService as NestConfigService } from '@nestjs/config';
 import { IConfig } from './config.types';
 
 @Injectable()
-export class ConfigService implements IConfig {
+export class AppConfigService implements IConfig {
   constructor(private readonly configService: NestConfigService) {}
 
   get server() {
@@ -15,7 +15,7 @@ export class ConfigService implements IConfig {
 
   get database() {
     return {
-      type: this.configService.get<string>("POSTGRES_TYPE", "postgres"),
+      type: this.configService.get<string>('POSTGRES_TYPE', 'postgres'),
       host: this.configService.get<string>('POSTGRES_HOST', 'localhost'),
       port: this.configService.get<number>('POSTGRES_PORT', 5432),
       username: this.configService.get<string>('POSTGRES_USER', 'postgres'),
