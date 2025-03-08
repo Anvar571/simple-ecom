@@ -16,6 +16,9 @@ export type UserUpdateDto = Required<
 
 export type UserResponse = Omit<UserModel, 'password'>;
 
-export type UserFindParam = Pick<UserModel, 'id' | 'fullname' | 'phone' | 'email'>;
+export type UserFindParam = Pick<
+  UserModel,
+  'id' | 'fullname' | 'phone' | 'email'
+>;
 
 export type FindAllUsersType = {};

@@ -6,9 +6,7 @@ import { SuccessResponseInterceptor } from './interceptors/success.response';
 import { ExceptionFilter } from './exceptions/exception.filter';
 
 @Module({
-  imports: [
-    AppConfigModule
-  ],
+  imports: [AppConfigModule],
   providers: [
     {
       provide: APP_INTERCEPTOR,

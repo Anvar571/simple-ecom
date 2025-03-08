@@ -9,7 +9,10 @@ export class CreateUserUseCase implements UseCase<UserCreateDto, UserResponse> {
   constructor(private readonly userRepository: UserRepository) {}
 
   public async execute(param: UserCreateDto) {
-    const user = await this.userRepository.findByParam({ email: param.email, phone: param.phone });
+    const user = await this.userRepository.findByParam({
+      email: param.email,
+      phone: param.phone,
+    });
 
     if (user) {
       throw new ConflictException('User already exists');

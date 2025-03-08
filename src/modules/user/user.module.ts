@@ -10,6 +10,6 @@ import { FindAllUserUseCase } from './usecases/findAllUsersUseCase';
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [CreateUserUseCase, UserRepository, FindAllUserUseCase],
-  exports: [CreateUserUseCase, UserRepository, FindAllUserUseCase]
+  exports: [CreateUserUseCase, UserRepository, FindAllUserUseCase],
 })
 export class UserModule {}

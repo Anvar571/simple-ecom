@@ -1,12 +1,9 @@
-import {
-  Entity,
-  Column,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { UserModel } from '../user.types';
 import { DefaultEntity } from '../../base/default.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity("users")
+@Entity('users')
 export class UserEntity extends DefaultEntity implements UserModel {
   @ApiProperty()
   @Column({ length: 100 })

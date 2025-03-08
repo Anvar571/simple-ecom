@@ -8,7 +8,9 @@ import { UserFilterDto } from './dto/find-users.dto';
 export interface IUserRepository {
   create: (user: UserEntity) => Promise<UserResponse>;
   findByParam: (param: Partial<UserFindParam>) => Promise<UserEntity | null>;
-  findAllUsers: (param: Partial<FindAllUsersType>) => Promise<UserEntity[] | []>;
+  findAllUsers: (
+    param: Partial<FindAllUsersType>,
+  ) => Promise<UserEntity[] | []>;
 }
 
 @Injectable()
@@ -26,20 +28,24 @@ export class UserRepository implements IUserRepository {
 
   async findByParam(param: Partial<UserFindParam>): Promise<UserEntity | null> {
     if (param.email) {
-        const userByEmail = await this.userRepo.findOne({ where: { email: param.email } });
-        if (userByEmail) return userByEmail;
+      const userByEmail = await this.userRepo.findOne({
+        where: { email: param.email },
+      });
+      if (userByEmail) return userByEmail;
     }
 
     if (param.phone) {
-        const userByPhone = await this.userRepo.findOne({ where: { phone: param.phone } });
-        if (userByPhone) return userByPhone;
+      const userByPhone = await this.userRepo.findOne({
+        where: { phone: param.phone },
+      });
+      if (userByPhone) return userByPhone;
     }
 
     return null;
-}
+  }
 
   async findByEmail(email: string) {
-    return this.userRepo.findOne({ where: {email} });
+    return this.userRepo.findOne({ where: { email } });
   }
 
   async findAllUsers(filterDto: UserFilterDto) {

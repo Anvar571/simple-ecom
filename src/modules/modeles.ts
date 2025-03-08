@@ -30,10 +30,10 @@ import { AppJwtModule } from './jwt/jwt.module';
       inject: [AppConfigService],
       useFactory: (appConfig: AppConfigService) => ({
         secret: appConfig.jwt.secret,
-      })
+      }),
     }),
-    AuthModule, 
-    UserModule
+    AuthModule,
+    UserModule,
   ],
 })
 export class Modules {}

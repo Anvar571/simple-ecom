@@ -21,27 +21,26 @@ export class ExceptionFilter extends BaseExceptionFilter {
         statusCode: exception.getStatus(),
         message: exception.getResponse(),
         error: exception.name,
-      }
+      };
     } else if (exception instanceof InternalServerErrorException) {
       body = {
         statusCode: 500,
-        message: "INTERNAL_SERVER_ERROR",
+        message: 'INTERNAL_SERVER_ERROR',
         error: exception.message,
-      }
+      };
     } else if (exception instanceof QueryFailedError) {
       body = {
         statusCode: 500,
         message: exception.message,
-        error: exception.driverError
-      }
+        error: exception.driverError,
+      };
     } else {
       body = {
         statusCode: 500,
-        message: "SOMETHING_HAPPENED",
+        message: 'SOMETHING_HAPPENED',
         error: exception,
-      }
+      };
     }
-
 
     response.json(body);
   }

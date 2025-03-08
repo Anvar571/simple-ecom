@@ -5,23 +5,23 @@ import { FindAllUserUseCase } from './usecases/findAllUsersUseCase';
 import { UserFilterDto } from './dto/find-users.dto';
 import { UserEntity } from './entity/user.entity';
 
-@ApiTags("Users")
+@ApiTags('Users')
 @Controller('user')
 export class UserController {
   constructor(private readonly findAllUserUseCase: FindAllUserUseCase) {}
 
   @Get()
-  @ApiOkResponse({ description: "Find users", type: [UserEntity] })
+  @ApiOkResponse({ description: 'Find users', type: [UserEntity] })
   findAllUser(@Query() param: UserFilterDto) {
-    return this.findAllUserUseCase.execute(param)
+    return this.findAllUserUseCase.execute(param);
   }
 
-  @Get(":id")
+  @Get(':id')
   findOne() {}
 
-  @Patch(":id")
+  @Patch(':id')
   updateUser() {}
 
-  @Delete(":id")
+  @Delete(':id')
   deleteUser() {}
 }
