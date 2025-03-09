@@ -29,7 +29,7 @@ import { Product } from './products/entity/product.entity';
         username: configService.database.username,
         password: configService.database.password,
         database: configService.database.database,
-        entities: [UserEntity, Category, Product, Order, Basket, ],
+        entities: [UserEntity, Category, Product, Order, Basket],
         synchronize: true,
       }),
     }),
@@ -46,7 +46,7 @@ import { Product } from './products/entity/product.entity';
     CategoryModule,
     ProductModule,
     OrderModule,
-    BasketModule
+    BasketModule,
   ],
 })
 export class Modules {}

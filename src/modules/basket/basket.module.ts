@@ -7,9 +7,9 @@ import { Product } from '../products/entity/product.entity';
 import { UserEntity } from '../user/entity/user.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Basket, Product, UserEntity])],
-    controllers: [BasketController],
-    providers: [BasketService],
-    exports: [BasketService]
+  imports: [TypeOrmModule.forFeature([Basket, Product, UserEntity])],
+  controllers: [BasketController],
+  providers: [BasketService],
+  exports: [BasketService],
 })
 export class BasketModule {}

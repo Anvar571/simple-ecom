@@ -1,7 +1,16 @@
-import { Controller, Post, UseGuards, Body, Get, Param, Patch, Delete } from "@nestjs/common";
-import { ProductService } from "./product.service";
-import { Roles } from "src/common/decorators/role";
-import { CreateProductDto } from "./dtos";
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+import { ProductService } from './product.service';
+import { Roles } from 'src/common/decorators/role';
+import { CreateProductDto } from './dtos';
 
 @Controller('products')
 export class ProductController {

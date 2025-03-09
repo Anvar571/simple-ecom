@@ -17,7 +17,10 @@ export class CategoryService {
   }
 
   findOne(id: number) {
-    return this.repo.findOne({ where: { id }, relations: ['parent', 'children'] });
+    return this.repo.findOne({
+      where: { id },
+      relations: ['parent', 'children'],
+    });
   }
 
   async update(id: number, data: UpdateCategoryDto) {

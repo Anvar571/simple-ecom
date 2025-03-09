@@ -13,7 +13,9 @@ export class ProductService {
   ) {}
 
   async create(dto: CreateProductDto): Promise<Product> {
-    const category = await this.categoryRepo.findOne({ where: { id: dto.categoryId } });
+    const category = await this.categoryRepo.findOne({
+      where: { id: dto.categoryId },
+    });
     if (!category) {
       throw new NotFoundException('Category not found');
     }
@@ -27,7 +29,10 @@ export class ProductService {
   }
 
   async findOne(id: number): Promise<Product> {
-    const product = await this.productRepo.findOne({ where: { id }, relations: ['category'] });
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['category'],
+    });
     if (!product) {
       throw new NotFoundException('Product not found');
     }
@@ -38,7 +43,9 @@ export class ProductService {
     const product = await this.findOne(id);
 
     if (dto.categoryId) {
-      const category = await this.categoryRepo.findOne({ where: { id: dto.categoryId } });
+      const category = await this.categoryRepo.findOne({
+        where: { id: dto.categoryId },
+      });
       if (!category) {
         throw new NotFoundException('Category not found');
       }

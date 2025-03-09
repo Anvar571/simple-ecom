@@ -1,6 +1,12 @@
 import { Basket } from 'src/modules/basket/entity/basket.entity';
 import { Category } from 'src/modules/category/entity/category.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 export class Product {

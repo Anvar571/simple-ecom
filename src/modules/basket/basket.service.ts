@@ -52,7 +52,10 @@ export class BasketService {
     });
   }
 
-  async updateBasketItem(userId: number, dto: UpdateBasketDto): Promise<Basket> {
+  async updateBasketItem(
+    userId: number,
+    dto: UpdateBasketDto,
+  ): Promise<Basket> {
     const basketItem = await this.basketRepository.findOne({
       where: { id: dto.basketId, user: { id: userId } },
     });
