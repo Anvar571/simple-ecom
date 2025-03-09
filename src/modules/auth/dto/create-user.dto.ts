@@ -28,5 +28,4 @@ export class CreateUserDto implements UserCreateDto {
 export type RegisterReturnType = {
   user: any;
   accessToken: string;
-  refreshToken: string;
 };

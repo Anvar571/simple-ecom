@@ -21,21 +21,21 @@ export class RegisterUseCase
     const user = await this.createUserUseCase.execute({
       ...param,
       password: hashedPassword,
-      role: Role.USER,
+      role: Role.ADMIN,
     });
 
     if (!user) {
       throw new ConflictException('User already exists');
     }
 
-    const tokens = await this.jwtService.getTokens({
+    const accessToken = await this.jwtService.getAccessToken({
       id: user.id,
       role: user.role,
     });
 
     return {
       user,
-      ...tokens,
+      accessToken,
     };
   }
 }

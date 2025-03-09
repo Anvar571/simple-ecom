@@ -23,9 +23,16 @@ export class AppAuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization?.split(' ')[1];
+    const authHeader = request.headers.authorization;
 
-    if (!token) throw new UnauthorizedException('Token required');
+    console.log(authHeader, 'header');
+
+    if (!authHeader) throw new UnauthorizedException('Token required');
+
+    const [bearer, token] = authHeader.split(' ');
+
+    if (bearer !== 'Bearer' || !token)
+      throw new UnauthorizedException('Invalid token format');
 
     try {
       const payload = await this.jwtService.verifyAsync(token, {
