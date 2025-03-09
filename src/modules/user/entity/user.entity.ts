@@ -1,5 +1,5 @@
 import { Entity, Column } from 'typeorm';
-import { UserModel } from '../user.types';
+import { Role, UserModel } from '../user.types';
 import { DefaultEntity } from '../../base/default.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -16,6 +16,9 @@ export class UserEntity extends DefaultEntity implements UserModel {
   @ApiProperty()
   @Column({ unique: true })
   phone: string;
+
+  @Column({ default: 'user' })
+  role: Role;
 
   @Column()
   password: string;

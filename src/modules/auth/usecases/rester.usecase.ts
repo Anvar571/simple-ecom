@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-
+import { Injectable, ConflictException } from '@nestjs/common';
 import { UseCase } from 'src/modules/base/usecase';
 import { CreateUserDto, RegisterReturnType } from '../dto/create-user.dto';
 import { CreateUserUseCase } from 'src/modules/user/usecases/createUserUseCase';
 import { AppJwtService } from 'src/modules/jwt/jwt.service';
+import * as bcrypt from 'bcrypt';
+import { Role } from 'src/modules/user/user.types';
 
 @Injectable()
 export class RegisterUseCase
@@ -15,19 +15,27 @@ export class RegisterUseCase
     private readonly jwtService: AppJwtService,
   ) {}
 
-  // jwt, other depend lib
   async execute(param: CreateUserDto): Promise<RegisterReturnType> {
     const hashedPassword = await bcrypt.hash(param.password, 10);
 
-    const newUser = await this.createUserUseCase.execute({
+    const user = await this.createUserUseCase.execute({
+      ...param,
       password: hashedPassword,
-      email: param.email,
-      fullname: param.fullname,
-      phone: param.phone,
+      role: Role.USER,
     });
 
-    const tokens = await this.jwtService.getTokens({ id: newUser.id });
+    if (!user) {
+      throw new ConflictException('User already exists');
+    }
 
-    return tokens;
+    const tokens = await this.jwtService.getTokens({
+      id: user.id,
+      role: user.role,
+    });
+
+    return {
+      user,
+      ...tokens,
+    };
   }
 }

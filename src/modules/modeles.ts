@@ -22,6 +22,7 @@ import { AppJwtModule } from './jwt/jwt.module';
         password: configService.database.password,
         database: configService.database.database,
         entities: [UserEntity],
+        synchronize: true,
       }),
     }),
     JwtModule.registerAsync({

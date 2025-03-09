@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
-import { UserCreateDto } from 'src/modules/user/user.types';
+import { Role, UserCreateDto } from 'src/modules/user/user.types';
 
 export class CreateUserDto implements UserCreateDto {
   @ApiProperty({ default: 'example@gmail.com' })
@@ -17,13 +17,16 @@ export class CreateUserDto implements UserCreateDto {
   @IsNotEmpty()
   readonly password: string;
 
+  readonly role: Role;
+
   @ApiProperty({ default: 'fullname' })
   @IsString()
   @IsNotEmpty()
   readonly fullname: string;
 }
 
-export interface RegisterReturnType {
-  refreshToken: string;
+export type RegisterReturnType = {
+  user: any;
   accessToken: string;
-}
+  refreshToken: string;
+};

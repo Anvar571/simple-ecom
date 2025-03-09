@@ -4,6 +4,7 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { FindAllUserUseCase } from './usecases/findAllUsersUseCase';
 import { UserFilterDto } from './dto/find-users.dto';
 import { UserEntity } from './entity/user.entity';
+import { Roles } from 'src/common/decorators/role';
 
 @ApiTags('Users')
 @Controller('user')
@@ -12,6 +13,7 @@ export class UserController {
 
   @Get()
   @ApiOkResponse({ description: 'Find users', type: [UserEntity] })
+  @Roles('admin')
   findAllUser(@Query() param: UserFilterDto) {
     return this.findAllUserUseCase.execute(param);
   }

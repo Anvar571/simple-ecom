@@ -1,9 +1,15 @@
+export enum Role {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 export interface UserModel {
   id?: number | string | any;
   fullname: string;
   password: string;
   phone: string;
   email: string;
+  role: Role;
   updatedAt: Date;
   createdAt: Date;
 }
