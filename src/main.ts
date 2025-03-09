@@ -10,11 +10,21 @@ async function bootstrap() {
 
   const config = app.get(AppConfigService);
 
+  app.enableCors();
+
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Simple E-commerse API')
     .setDescription('API documentation')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      in: 'header',
+      name: 'Authorization',
+      description: 'Enter your Bearer token',
+    })
+    .addSecurityRequirements('bearer')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

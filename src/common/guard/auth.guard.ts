@@ -25,8 +25,6 @@ export class AppAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers.authorization;
 
-    console.log(authHeader, 'header');
-
     if (!authHeader) throw new UnauthorizedException('Token required');
 
     const [bearer, token] = authHeader.split(' ');

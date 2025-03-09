@@ -23,5 +23,6 @@
       "@module": ["./modules"],
       "@domain": ["./domain"]
     },
+    "typeRoots": ["./node_modules/@types", "./types"]
   }
 }

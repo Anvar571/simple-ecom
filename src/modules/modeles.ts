@@ -8,6 +8,14 @@ import { UserEntity } from 'src/modules/user/entity/user.entity';
 import { AppConfigModule } from 'src/common/configs/config.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AppJwtModule } from './jwt/jwt.module';
+import { CategoryModule } from './category/category.module';
+import { ProductModule } from './products/product.module';
+import { OrderModule } from './orders/order.module';
+import { BasketModule } from './basket/basket.module';
+import { Category } from './category/entity/category.entity';
+import { Order } from './orders/entity/order.entity';
+import { Basket } from './basket/entity/basket.entity';
+import { Product } from './products/entity/product.entity';
 
 @Module({
   imports: [
@@ -21,7 +29,7 @@ import { AppJwtModule } from './jwt/jwt.module';
         username: configService.database.username,
         password: configService.database.password,
         database: configService.database.database,
-        entities: [UserEntity],
+        entities: [UserEntity, Category, Product, Order, Basket, ],
         synchronize: true,
       }),
     }),
@@ -35,6 +43,10 @@ import { AppJwtModule } from './jwt/jwt.module';
     }),
     AuthModule,
     UserModule,
+    CategoryModule,
+    ProductModule,
+    OrderModule,
+    BasketModule
   ],
 })
 export class Modules {}
