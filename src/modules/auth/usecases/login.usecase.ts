@@ -24,10 +24,10 @@ export class LoginUseCase implements UseCase<LoginDto, LoginUseCaseReturnType> {
       throw new UnauthorizedException('Email or password is incorrect');
     }
 
-    const refreshToken = await this.jwtService.getRefreshToken({
+    const tokens = await this.jwtService.getTokens({
       id: user.id,
       role: user.role,
     });
-    return { refreshToken };
+    return tokens;
   }
 }
