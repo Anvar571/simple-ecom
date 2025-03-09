@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { Roles } from 'src/common/decorators/role';
 import { CategoryService } from './category.service';
+import { CreateCategoryDto, UpdateCategoryDto } from './dto';
 
 @Controller('categories')
 export class CategoryController {
@@ -16,7 +17,7 @@ export class CategoryController {
 
   @Roles('admin')
   @Post()
-  create(@Body() createDto) {
+  create(@Body() createDto: CreateCategoryDto) {
     return this.categoryService.create(createDto);
   }
 
@@ -32,7 +33,7 @@ export class CategoryController {
 
   @Roles('admin')
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDto) {
+  update(@Param('id') id: string, @Body() updateDto: UpdateCategoryDto) {
     return this.categoryService.update(+id, updateDto);
   }
 
